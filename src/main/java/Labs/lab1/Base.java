@@ -18,7 +18,6 @@ public abstract class Base implements ICrudAction {
 
 
 
-
     public Base () {
         this.ID = UUID.randomUUID();
     }
@@ -55,8 +54,7 @@ public abstract class Base implements ICrudAction {
                 this.manufacturer = temp;
             }
         }
-
-        input.close();
+        input.close ();
     }
 
     @Override

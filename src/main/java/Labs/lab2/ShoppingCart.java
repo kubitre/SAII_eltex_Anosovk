@@ -9,9 +9,16 @@ public class ShoppingCart implements ICrudAction
 {
     protected ArrayList<Base> objects;
     private TreeSet<UUID> IDs;
+    private String[] args;
+
 
     public ShoppingCart(){
+        this.args = new String[]{};
         this.update();
+    }
+
+    public ShoppingCart(String[] args){
+        this.args = args;
     }
 
     @Override
@@ -43,10 +50,10 @@ public class ShoppingCart implements ICrudAction
     @Override
     public void update() {
 
-        this.objects = InputInfo.Process(null);
-        for(Base i: objects){
+        this.objects = InputInfo.Process(this.args);
+        /*for(Base i: objects){
             this.IDs.add(i.ID);
-        }
+        }*/
     }
 
 
