@@ -1,5 +1,6 @@
 package Input.ParseInput;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MainParseLevel
@@ -15,11 +16,16 @@ public class MainParseLevel
         this.input = input;
     }
 
-    public void ProcessR(){
-        Pattern pattern = Pattern.compile ( "[a-zA-Z1-7:.]" );
+    public void ProcessR() throws Exception {
+        Pattern pattern = Pattern.compile ( "!(test lab[1-7]|view lab[1-7]:[a-zA-Z0-9]+.java|exit)" );
+        Matcher find = pattern.matcher ( this.input );
         String[] finding = pattern.split ( this.input );
-        for(String word: finding){
-            System.out.print ( word );
+        if(find.groupCount () >= 1){
+            find.find ();
+            System.out.print ( find.group () );
+        }
+        else {
+            throw new Exception ( "Error of parsing request!" );
         }
     }
 
