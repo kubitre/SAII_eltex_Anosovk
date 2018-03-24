@@ -31,6 +31,13 @@ public class Orders implements ICrudAction {
         this.Orders_.removeIf(e -> e.equals("complete"));
     }
 
+    public void ShowAllGoods(){
+        for (Order i: this.Orders_
+             ) {
+            i.read ();
+        }
+    }
+
     @Override
     public void create() {
         this.accountData = new Credentials();

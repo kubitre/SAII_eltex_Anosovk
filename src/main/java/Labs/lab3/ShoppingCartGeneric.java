@@ -1,36 +1,39 @@
-package Labs.lab2;
+package Labs.lab3;
 
-import java.util.*;
 import Labs.lab1.Base;
+import Labs.lab1.Cap;
 import Labs.lab1.ICrudAction;
 import TPack.InputInfo;
 
-public class ShoppingCart implements ICrudAction
-{
-    protected ArrayList<Base> objects;
+import java.util.ArrayList;
+import java.util.TreeSet;
+import java.util.UUID;
+
+public class ShoppingCartGeneric<T extends Base> implements ICrudAction{
+    protected ArrayList<T> objects;
     private TreeSet<UUID> IDs;
     private String[] args;
 
 
-    public ShoppingCart(){
+    public ShoppingCartGeneric(){
         this.args = new String[]{};
         this.update();
     }
 
-    public ShoppingCart(String[] args){
+    public ShoppingCartGeneric(String[] args){
         this.args = args;
     }
 
     public void ShowAllGoods(){
-        for (Base i: this.objects
-             ) {
-             i.read ();
+        for (T i: this.objects
+                ) {
+            i.read ();
         }
     }
 
     public void findObjectById(UUID id){
         for (UUID i: this.IDs
-             ) {
+                ) {
             if(i.equals ( id)){
 
             }
@@ -39,7 +42,7 @@ public class ShoppingCart implements ICrudAction
 
     @Override
     public void create() {
-        this.objects = new ArrayList<Base>();
+        this.objects = new ArrayList<T>();
 
         for (Base i: objects
                 ) {
@@ -52,7 +55,7 @@ public class ShoppingCart implements ICrudAction
     @Override
     public void read() {
         for (Base i: objects
-             ) {
+                ) {
             i.read();
         }
 
