@@ -9,11 +9,11 @@ public abstract class Builder
         this.step = step;
     }
 
-    public abstract void buildImpl();
+    public abstract void buildImpl(String[] Params);
 
-    public void build(InputGroup input, String param){
+    public void build(InputGroup input, String[] param){
         if(input.getSteps ().contains ( step )){
-            buildImpl ();
+            buildImpl (param);
 
         }
         if(nextBuilder != null){

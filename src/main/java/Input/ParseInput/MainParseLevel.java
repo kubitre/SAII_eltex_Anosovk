@@ -14,10 +14,16 @@ public class MainParseLevel
 
     public MainParseLevel(String input){
         this.input = input;
+        try {
+            ProcessR ();
+        }catch (Exception e){
+            System.out.print ( e.getMessage () );
+        }
+
     }
 
     public void ProcessR() throws Exception {
-        Pattern pattern = Pattern.compile ( "!(test lab[1-7]|view lab[1-7]:[a-zA-Z0-9]+.java|exit)" );
+        Pattern pattern = Pattern.compile ( "(test lab[1-7]|view lab[1-7]:[a-zA-Z0-9]+.java|exit)" );
         Matcher find = pattern.matcher ( this.input );
         String[] finding = pattern.split ( this.input );
         if(find.groupCount () >= 1){

@@ -4,9 +4,13 @@ import java.util.*;
 
 public class InputGroup {
     private final Set stepsInput = new HashSet (  );
-
-    public InputGroup (InputSteps... steps) {
+    private final String[] Params = new String[]{};
+    public InputGroup (String[] paramss,InputSteps... steps) {
         this.stepsInput.addAll ( Arrays.asList ( steps ) );
+
+        for(int i = 0; i< paramss.length; i++){
+            this.Params[i] = paramss[i];
+        }
     }
 
     enum InputSteps{

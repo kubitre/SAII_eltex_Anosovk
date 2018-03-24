@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-public class OrdersGeneric<T> implements ICrudAction{
+public class OrdersGeneric implements ICrudAction{
         private Credentials accountData;
         private LinkedList<Order> Orders_;
         private Map<Timer, Order> Finders;
@@ -32,9 +32,11 @@ public class OrdersGeneric<T> implements ICrudAction{
             }
 
         }
-        public void AddOrder(T order){
-            this.Orders_.add ( T );
+        /*
+        public void AddOrder(Order order){
+            this.Orders_.add ( Order );
         }
+        */
         public void delElementCollection(){
             this.Orders_.removeIf(e -> e.equals("complete"));
         }

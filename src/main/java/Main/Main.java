@@ -5,6 +5,18 @@ import Labs.lab2.ShoppingCart;
 
 public class Main
 {
+    public static Object r ;
+    public static MainParseLevel parse;
+    public static String input;
+
+    public static class MyParsing implements Runnable {
+        @Override
+        public void run(){
+            synchronized (r) {
+                MainParseLevel parse = new MainParseLevel ( input );
+            }
+        }
+    }
     public static void main(String []args) {
         System.out.print ( "testing output");
         //testiingProgramModule();
@@ -23,7 +35,8 @@ public class Main
     }
 
     public static void testingParsing() throws Exception {
-        MainParseLevel parse = new MainParseLevel ("exit ");
-        parse.ProcessR ();
+        //Thread Parsing = new Thread ( MyParsing ); //Todo
+
+
     }
 }
