@@ -18,7 +18,6 @@ public class TestLab1Builder extends Builder {
                 System.out.print ( i );
             }
         }
-
     }
 
     private static Boolean testing_module(String [] args) {
@@ -65,16 +64,12 @@ public class TestLab1Builder extends Builder {
         }
         return true;
     }
-
     private static int[] returnInputD(String[] args) {
-        String type_cap = "cap",
-                type_tshirt = "tshirt",
-                temp_type;
-
-
+        String type_cap = "cap";
+        String type_tshirt = "tshirt";
+        String temp_type;
         int quantaty_caps = 0,
                 quantaty_tshirt = 0;
-
 
         int [] result = new int[2];
 
@@ -134,6 +129,4 @@ public class TestLab1Builder extends Builder {
 
         return res;
     }
-
-
 }
