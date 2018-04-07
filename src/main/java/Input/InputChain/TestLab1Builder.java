@@ -4,6 +4,8 @@ import Labs.lab1.Cap;
 import Labs.lab1.ICrudAction;
 import Labs.lab1.Tshirt;
 
+import java.io.IOException;
+
 public class TestLab1Builder extends Builder {
     public TestLab1Builder(){
         super(InputGroup.InputSteps.TESTLAb1);
@@ -117,7 +119,7 @@ public class TestLab1Builder extends Builder {
         Cap res = new Cap ();
 
         res.create();
-        res.update();
+        res.update ();
 
         return res;
     }

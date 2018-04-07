@@ -22,6 +22,7 @@ public class Main
         //testiingProgramModule();
         try {
             testingParsing ( );
+            testLab2();
         }
         catch (Exception e){
             System.out.print ( e.getMessage () );
@@ -37,6 +38,10 @@ public class Main
     public static void testingParsing() throws Exception {
         //Thread Parsing = new Thread ( MyParsing ); //Todo
 
+
+    }
+    public static void testLab2(){
+        ShoppingCart cart = new ShoppingCart ( new String[]{"cap", "2", "tshirt", "2"} );
 
     }
 }

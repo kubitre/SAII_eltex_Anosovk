@@ -4,6 +4,7 @@ import Labs.lab1.Base;
 import Labs.lab1.Cap;
 import Labs.lab1.Tshirt;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -59,6 +60,7 @@ public class InputInfo
     }
 
     private static int[] returnInputD(String[] args) {
+
         String type_cap = "cap",
                 type_tshirt = "tshirt",
                 temp_type;
@@ -114,7 +116,7 @@ public class InputInfo
         Cap res = new Cap ();
 
         res.create();
-        res.update();
+        res.update ();
 
         return res;
     }

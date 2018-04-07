@@ -54,7 +54,6 @@ public abstract class Base implements ICrudAction {
                 this.manufacturer = temp;
             }
         }
-        input.close ();
     }
 
     @Override

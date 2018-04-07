@@ -1,5 +1,7 @@
 package Labs.lab2;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import javax.xml.crypto.Data;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,13 +15,15 @@ public class Timer
                 seconds;
 
 
+    public boolean isEnd = false;
+
     public void constructing(){
         Data data = (Data) new Date();
         SimpleDateFormat formating = new SimpleDateFormat("hh:mm:ss");
         String temp = formating.format(data);
 
         this.hour = new Integer(String.valueOf(temp.split(":", 1)));
-        this.hour = new Integer(String.valueOf(temp.split(":", 2)));
+        this.minutes = new Integer(String.valueOf(temp.split(":", 2)));
         this.seconds = new Integer(String.valueOf(temp.split(":", 3)));
     }
 
@@ -47,4 +51,9 @@ public class Timer
             }
         }
     }
+
+    public int getSeconds(){
+        return hour * 3600 + minutes * 60 + seconds;
+    }
+
 }

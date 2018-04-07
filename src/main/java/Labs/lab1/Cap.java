@@ -1,11 +1,13 @@
 package Labs.lab1;
 
+import Input.ParseInput.ParsingPatterns;
 import Labs.lab1.Base;
-
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Cap extends Base {
     private String Color;
@@ -52,25 +54,55 @@ public class Cap extends Base {
     @Override
     public void create ( ) {
         super.create ( );
-        this.name = "main.java.lab2.Cap";
-        this.manufacturer = "main.java.lab2.Cap's manufacture";
+        this.name = "Cap";
+        this.manufacturer = "Cap's manufacture";
         this.Color = "TestColor";
         this.Logotype = "TestLogotype";
     }
 
     @Override
     public void update ( ) {
-        System.out.print ( "Input Cap good's (add the [Price] [manufacture] [Color] [Logotype]: \n" );
-        super.update ( );
-        Scanner input = new Scanner(System.in);
-        if(!input.hasNextLine()){
-            this.Color = input.next();
-            this.Logotype = input.next();
+        System.out.print ( "Input Cap good's (add the [Price] [manufacture] [Color] [Logotype]): \n" );
+
+        String temp = "";
+        Scanner input = new Scanner ( System.in );
+        if (input.hasNextLine ( )) {
+            temp = input.nextLine ( );
         }
-        input.close();
+        parseUpdate ( temp );
+    }
+
+    protected void parseUpdate(String parse){
+        this.parseAll ( ParsingPatterns.Price, parse, 0);
+        this.parseAll ( ParsingPatterns.Manufacturer, parse, 1 );
+        this.parseAll ( ParsingPatterns.Colors, parse, 2 );
+        this.parseAll ( ParsingPatterns.Logotypes, parse, 3 );
+    }
+    protected void parseAll(String pattern, String inputStr, int Id){
+        Pattern price = Pattern.compile ( pattern );
+        Matcher finds = price.matcher ( inputStr );
+
+        if(finds.find ()){
+            switch (Id){
+                case 0:
+                    this.price = Double.parseDouble ( finds.group () );
+                    break;
+                case 1:
+                    this.manufacturer = finds.group ();
+                    break;
+                case 2:
+                    this.Color = finds.group ();
+                    break;
+                case 3:
+                    this.Logotype = finds.group ();
+                    break;
+            }
+
+        }
     }
     @Override
     public void read(){
+        super.read ();
         System.out.print(
                         "Color: " + this.Color+ "\n" +
                         "Logotype: " + this.Logotype+"\n"

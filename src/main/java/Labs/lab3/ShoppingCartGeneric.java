@@ -1,50 +1,81 @@
 package Labs.lab3;
 
 import Labs.lab1.Base;
-import Labs.lab1.Cap;
 import Labs.lab1.ICrudAction;
 import TPack.InputInfo;
 
+import java.rmi.server.UID;
 import java.util.ArrayList;
 import java.util.TreeSet;
 import java.util.UUID;
 
-public class ShoppingCartGeneric<T extends Base> implements ICrudAction{
+public class ShoppingCartGeneric<T extends Base> implements ICrudAction
+{
     protected ArrayList<T> objects;
     private TreeSet<UUID> IDs;
-    private String[] args;
 
 
-    public ShoppingCartGeneric(){
-        this.args = new String[]{};
+    public ShoppingCartGeneric (){
+        /*this.args = new String[]{"cap", "3"};
         this.update();
+        for (Base i: objects
+             ) {
+            IDs.add ( i.ID );
+        }*/
     }
 
-    public ShoppingCartGeneric(String[] args){
-        this.args = args;
+    public ShoppingCartGeneric (String[] args){
+        /*this.args = args;
+        this.update ();
+        for (Base i: objects
+                ) {
+            IDs.add ( i.ID );
+        }
+        */
+    }
+
+    public void addItemT(T newItem){
+        this.objects.add ( newItem );
+    }
+    public void deleteItemT(UID idDelete){
+        int indexDelete = -1;
+        int index = 0;
+
+        for (UUID i: IDs
+             ) {
+            if(i.equals ( idDelete )){
+                indexDelete = index;
+                break;
+            }
+            index ++;
+        }
+
+        this.objects.remove ( indexDelete );
+        this.IDs.remove ( idDelete );
     }
 
     public void ShowAllGoods(){
         for (T i: this.objects
-                ) {
-            i.read ();
+             ) {
+             i.read ();
         }
     }
 
-    public void findObjectById(UUID id){
+    public UUID findObjectById(UUID id){
         for (UUID i: this.IDs
-                ) {
+             ) {
             if(i.equals ( id)){
-
+                return i;
             }
         }
+        return null;
     }
 
     @Override
     public void create() {
         this.objects = new ArrayList<T>();
 
-        for (Base i: objects
+        for (T i: objects
                 ) {
             this.IDs.add(i.ID);
         }
@@ -54,8 +85,8 @@ public class ShoppingCartGeneric<T extends Base> implements ICrudAction{
 
     @Override
     public void read() {
-        for (Base i: objects
-                ) {
+        for (T i: objects
+             ) {
             i.read();
         }
 
@@ -68,8 +99,11 @@ public class ShoppingCartGeneric<T extends Base> implements ICrudAction{
 
     @Override
     public void update() {
-/*
-        this.objects = InputInfo.Process(this.args);
+        ArrayList<Base> objects_temp = InputInfo.Process(null);
+
+        for(T i : objects){
+            IDs.add ( i.ID );
+        }
         /*for(Base i: objects){
             this.IDs.add(i.ID);
         }*/

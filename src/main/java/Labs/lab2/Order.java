@@ -3,36 +3,55 @@ package Labs.lab2;
 import Labs.lab1.ICrudAction;
 
 import java.util.Scanner;
+import TPack.ConstantlyStates.StatusOrder;
 
 public class Order implements ICrudAction
 {
-    private String statusOrder;
+    private StatusOrder statusOrder;
     private Timer dateCreation,
                   dateProcessing;
 
     private ShoppingCart cart;
 
-    public Order(ShoppingCart cart){
-        this.dateCreation = new Timer();
-        this.dateCreation.constructing();
+    private Credentials account;
 
+    public void CreateOrder(ShoppingCart cart, Credentials account){
         this.cart = cart;
 
-        this.statusOrder = "in processing";
+        this.account = account;
 
-        this.dateProcessing = new Timer();
-        this.dateProcessing.DateRand(this.dateCreation);
-    }
-
-    private void change_status(){
-        if(statusOrder.contains("in processing")){
-            statusOrder = "complete";
+        if(dateProcessing == null){
+            dateProcessing = new Timer ();
+            dateProcessing.DateRand ( dateCreation );
         }
     }
 
+    public void setAccountData(Credentials account){
+        this.account = account;
+    }
 
-    public String getStatus(){
-        return this.statusOrder;
+    public void setShoppingCart(ShoppingCart cart){
+        this.cart = cart;
+    }
+
+    protected void findComplete(){
+        if(dateProcessing.isEnd){
+
+        }
+    }
+
+    public void change_status(){
+        if(statusOrder.equals (StatusOrder.isProcessing)){
+            statusOrder = StatusOrder.complete;
+        }
+    }
+
+    protected ShoppingCart getCart(){
+        return this.cart;
+    }
+
+    public StatusOrder getStatus(){
+        return statusOrder;
     }
 
     public Timer getDateCreation(){
@@ -44,9 +63,16 @@ public class Order implements ICrudAction
     }
 
 
+
     @Override
     public void create() {
-        this.statusOrder = "in processing";
+        statusOrder = StatusOrder.isProcessing;
+
+        if(dateCreation == null) {
+            dateCreation = new Timer ( );
+        }
+
+        dateCreation.constructing ( );
     }
 
     @Override
@@ -80,6 +106,6 @@ public class Order implements ICrudAction
 
     @Override
     public void delete() {
-        this.statusOrder = "deleted";
+        statusOrder = StatusOrder.deleted;
     }
 }

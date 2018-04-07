@@ -1,98 +1,105 @@
 package Labs.lab3;
 
+import Labs.lab1.Base;
 import Labs.lab1.ICrudAction;
 import Labs.lab2.Credentials;
 import Labs.lab2.Order;
 import Labs.lab2.ShoppingCart;
 import Labs.lab2.Timer;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-public class OrdersGeneric implements ICrudAction{
-        private Credentials accountData;
-        private LinkedList<Order> Orders_;
-        private Map<Timer, Order> Finders;
+public class OrdersGeneric<T extends Base> implements ICrudAction {
 
-        public OrdersGeneric ()
-        {
+    private Credentials accountData;
+    private LinkedList<ShoppingCartGeneric<T>> shoppingCarts;
+    private LinkedList<OrderGeneric<T>> Orders;
+    private Map<Timer, OrderGeneric<T>> Finders;
 
+    public LinkedList<OrderGeneric<T>> getOrders ( ) {
+        return Orders;
+    }
+
+    public OrdersGeneric ()
+    {
+
+    }
+
+    private void checkout(ShoppingCartGeneric<T> newCart)
+    {
+        if(!(accountData == null)) {
+            this.accountData.create ( );
+            this.accountData.update ( );
+        }
+        addNewOrder (newCart);
+
+    }
+
+    private void addNewOrder(ShoppingCartGeneric<T> newCart){
+        OrderGeneric<T> temp = new OrderGeneric<T> ();
+
+        temp.create ();
+
+        temp.setAccountData ( this.accountData );
+
+        if(!shoppingCarts.contains ( newCart )){
+            shoppingCarts.add ( newCart );
+            temp.setShoppingCartGeneric ( newCart );
         }
 
-        private void checkout(ArrayList<Order> orders)
-        {
-            this.accountData.create();
-            this.accountData.update();
+        Orders.add ( temp );
+    }
 
-            for(Order i: this.Orders_){
-                this.Orders_.add(i);
-            }
+    public void delElementCollection(){
+        this.Orders.removeIf(e -> (e.equals("complete")||e.getDateProcessing ().isEnd));
+    }
 
+    public void ShowAllGoods(){
+        for (Order i: this.Orders
+             ) {
+            i.read ();
         }
-        /*
-        public void AddOrder(Order order){
-            this.Orders_.add ( Order );
+    }
+
+    public void CheckNewCart(){
+        ShoppingCart temp_cart = new ShoppingCart (  );
+    }
+
+    @Override
+    public void create() {
+        this.accountData = new Credentials();
+        this.accountData.create();
+
+    }
+
+    @Override
+    public void read() {
+        System.out.print("Orders info: " + "\n"
+                );
+
+        if(accountData != null) {
+            this.accountData.read ( );
         }
-        */
-        public void delElementCollection(){
-            this.Orders_.removeIf(e -> e.equals("complete"));
+        else{
+            System.out.print ("Accound Data not input for the objects " + this.getClass ());
         }
 
-        public void ShowAllGoods(){
-            for (Order i: this.Orders_
+        if(Orders != null || Orders.size () != 0) {
+            for (Order i : this.Orders
                     ) {
-                i.read ();
+                i.read ( );
             }
         }
+    }
 
-        @Override
-        public void create() {
-            this.accountData = new Credentials();
-            this.accountData.create();
+    @Override
+    public void update() {
 
-        }
+    }
 
-        @Override
-        public void read() {
-            System.out.print("Orders info: " + "\n"
-            );
-            this.accountData.read();
-
-            for (Order i: this.Orders_
-                    ) {
-                i.read();
-            }
-        }
-
-        @Override
-        public void update() {
-            this.accountData = new Credentials();
-            this.accountData.update();
-            int quanOrders = 0;
-
-            this.Finders = new HashMap<Timer, Order> (  );
-
-            System.out.print("Input a quantaty of orded: ");
-            try{
-                quanOrders= System.in.read();
-                System.in.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            for(int i =0;i < quanOrders; i++){
-                Order temp = new Order(new ShoppingCart ());
-                Finders.put ( temp.getDateCreation (), temp );
-            }
-
-        }
-
-        @Override
-        public void delete() {
-            this.accountData.delete();
-        }
-
+    @Override
+    public void delete() {
+        this.accountData.delete();
+    }
 }

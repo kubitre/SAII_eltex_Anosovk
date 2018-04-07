@@ -1,6 +1,10 @@
 package Labs.lab1;
 
+import Input.ParseInput.ParsingPatterns;
+
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Tshirt extends Base
 {
@@ -26,15 +30,47 @@ public class Tshirt extends Base
 
     @Override
     public void update(){
-        System.out.print ( "Input main.java.lab2.Cap good's (add the [Price(number with float)] [manufacture(exampletext)] [withPrint(true|false)] [TextOnFaceSide(exampleText)]: \n" );
-        super.update();
+        System.out.print ( "T-Shirt good's (add the [Price(example: 714.51)] [manufacture(isEnabled)] [withPrint(true|false)] [TextOnFaceSide(exampleText)]: \n" );
+
+        String temp = "";
         Scanner input = new Scanner(System.in);
-        if(!input.hasNextLine()){
-            if (input.nextBoolean()) this.withPrint = true;
-            else this.withPrint = false;
-            this.TextOnFace = input.next();
+
+        if (input.hasNextLine ( )) {
+            temp = input.nextLine ( );
         }
-        input.close();
+        parseUpdate ( temp );
+
+    }
+
+    protected void parseUpdate(String parse){
+        this.parseAll ( ParsingPatterns.Price, parse, 0);
+        this.parseAll ( ParsingPatterns.Manufacturer, parse, 1 );
+        this.parseAll ( ParsingPatterns.withPrint, parse, 2 );
+        this.parseAll ( ParsingPatterns.TextOnFace, parse, 3 );
+    }
+    protected void parseAll(String pattern, String inputStr, int Id){
+        Pattern price = Pattern.compile ( pattern );
+        Matcher finds = price.matcher ( inputStr );
+
+        if(finds.find ()){
+            switch (Id){
+                case 0:
+                    this.price = Double.parseDouble ( finds.group () );
+                    break;
+                case 1:
+                    this.manufacturer = finds.group ();
+                    break;
+                case 2:
+                    this.withPrint = (finds.group () == "yes"? true : false);
+                    break;
+                case 3:
+                    if(this.withPrint == true) {
+                        this.TextOnFace = finds.group ( );
+                    }
+                    break;
+            }
+
+        }
     }
 
     @Override

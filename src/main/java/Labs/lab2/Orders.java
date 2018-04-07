@@ -2,40 +2,61 @@ package Labs.lab2;
 
 import Labs.lab1.ICrudAction;
 
+import java.io.Console;
 import java.io.IOException;
 import java.util.*;
 
 public class Orders implements ICrudAction {
 
     private Credentials accountData;
-    private LinkedList<Order> Orders_;
+    private LinkedList<ShoppingCart> shoppingCarts;
+    private LinkedList<Order> Orders;
     private Map<Timer, Order> Finders;
+
 
     public Orders ()
     {
 
     }
 
-    private void checkout(ArrayList<Order> orders)
+    private void checkout(ShoppingCart newCart)
     {
-        this.accountData.create();
-        this.accountData.update();
+        if(!(accountData == null)) {
+            this.accountData.create ( );
+            this.accountData.update ( );
+        }
+        addNewOrder (newCart);
 
-        for(Order i: this.Orders_){
-            this.Orders_.add(i);
+    }
+
+    private void addNewOrder(ShoppingCart newCart){
+        Order temp = new Order ();
+
+        temp.create ();
+
+        temp.setAccountData ( this.accountData );
+
+        if(!shoppingCarts.contains ( newCart )){
+            shoppingCarts.add ( newCart );
+            temp.setShoppingCart ( newCart );
         }
 
+        Orders.add ( temp );
     }
 
     public void delElementCollection(){
-        this.Orders_.removeIf(e -> e.equals("complete"));
+        this.Orders.removeIf(e -> (e.equals("complete")||e.getDateProcessing ().isEnd));
     }
 
     public void ShowAllGoods(){
-        for (Order i: this.Orders_
+        for (Order i: this.Orders
              ) {
             i.read ();
         }
+    }
+
+    public void CheckNewCart(){
+        ShoppingCart temp_cart = new ShoppingCart (  );
     }
 
     @Override
@@ -49,34 +70,24 @@ public class Orders implements ICrudAction {
     public void read() {
         System.out.print("Orders info: " + "\n"
                 );
-        this.accountData.read();
 
-        for (Order i: this.Orders_
-             ) {
-            i.read();
+        if(accountData != null) {
+            this.accountData.read ( );
+        }
+        else{
+            System.out.print ("Accound Data not input for the objects " + this.getClass ());
+        }
+
+        if(Orders != null || Orders.size () != 0) {
+            for (Order i : this.Orders
+                    ) {
+                i.read ( );
+            }
         }
     }
 
     @Override
     public void update() {
-        this.accountData = new Credentials();
-        this.accountData.update();
-        int quanOrders = 0;
-
-        this.Finders = new HashMap<Timer, Order> (  );
-
-        System.out.print("Input a quantaty of orded: ");
-        try{
-            quanOrders= System.in.read();
-            System.in.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        for(int i =0;i < quanOrders; i++){
-            Order temp = new Order(new ShoppingCart ());
-            Finders.put ( temp.getDateCreation (), temp );
-        }
 
     }
 

@@ -6,7 +6,7 @@ public class ViewAllBuilder extends Builder {
     }
 
     @Override
-    public void buildImpl(){
-        System.out.print ( "View all source path" );
+    public void buildImpl (String[] Params) {
+
     }
 }
